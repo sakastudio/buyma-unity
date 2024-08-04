@@ -3972,7 +3972,7 @@ PrefabInstance:
     - target: {fileID: 8430135772675444512, guid: 8b914e5870a1ce546a6d1de9d206396a,
         type: 3}
       propertyPath: m_text
-      value: https://www.chanel.com/my/fashion/p/P77960K11281NZS56/jacket-cashmere-cotton/
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8430135772675444512, guid: 8b914e5870a1ce546a6d1de9d206396a,
         type: 3}
