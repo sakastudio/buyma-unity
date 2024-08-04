@@ -18,10 +18,10 @@ namespace UI
         [SerializeField] private TMP_InputField 商品コメント素材;
         [SerializeField] private TMP_InputField 商品コメント色;
         [SerializeField] private TMP_Dropdown 商品コメントリスト;
-        
-        [SerializeField] private TMP_InputField サイズ1;
-        [SerializeField] private TMP_InputField サイズ2;
-        [SerializeField] private TMP_InputField サイズ3;
+
+        [SerializeField] private Toggle サイズを入力;
+        [SerializeField] private GameObject サイズ入力欄;
+        [SerializeField] private TMP_InputField サイズ;
 
         [SerializeField] private Button 送信ボタン;
 
@@ -30,6 +30,10 @@ namespace UI
             URLを開く.onClick.AddListener(() =>
             {
                 Application.OpenURL(商品URL.text);
+            });
+            サイズを入力.onValueChanged.AddListener(isOn =>
+            {
+                サイズ入力欄.SetActive(isOn);
             });
             元データ.onEndEdit.AddListener(_ => CreateData());
             送信ボタン.onClick.AddListener(() =>
@@ -56,15 +60,15 @@ namespace UI
                 var 商品名 = split[6];
                 var url = split[7];
                 商品URL.text = url;
-                var 価格 = int.Parse(split[12].Replace("\\", "").Replace(",", ""));
+                var 価格 = int.Parse(split[12].Replace("¥", "").Replace(",", ""));
                 
-                var 利益 = split[24];
-                var 利益率 = split[25];
+                var 利益 = split[25];
+                var 利益率 = split[26];
 
                 var buymaData = new SendBuymData();
                 buymaData.商品名 = 商品名;
                 
-                var 商品簡易コメント = 商品コメントリスト.itemText.text.Replace("{アイテム}",商品コメント簡易商品名.text);
+                var 商品簡易コメント = 商品コメントリスト.options[商品コメントリスト.value].text.Replace("{アイテム}",商品コメント簡易商品名.text);
                 buymaData.商品コメント = 商品コメントテンプレート
                     .Replace("{素材}", 商品コメント素材.text)
                     .Replace("{色名}", 商品コメント色.text)
@@ -76,13 +80,20 @@ namespace UI
                 buymaData.ブランド = "CHANEL";
                 buymaData.シーズン = シーズン;
 
-                var サイズ = $"{サイズ1.text} × {サイズ2.text} × {サイズ3.text}cm";
-                buymaData.色_サイズ情報 = 色_サイズ情報テンプレート
+                var 色サイズ = 色_サイズ情報テンプレート
                     .Replace("{ブランド名}", "CHANEL")
                     .Replace("{簡易商品名}", 商品コメント簡易商品名.text)
                     .Replace("{色名}", 商品コメント色.text)
-                    .Replace("{素材}", 商品コメント素材.text)
-                    .Replace("{サイズ}", サイズ);
+                    .Replace("{素材}", 商品コメント素材.text);
+                if (サイズを入力.isOn)
+                {
+                    色サイズ = 色サイズ.Replace("{サイズ}", サイズ情報テンプレート.Replace("{サイズ情報}", サイズ.text));
+                }
+                else
+                {
+                    色サイズ = 色サイズ.Replace("\n{サイズ}", "");
+                }
+                buymaData.色_サイズ情報 = 色サイズ;
                 
                 buymaData.価格 = 価格;
                 buymaData.出品メモ = $"三浦 伽奈\nNo.{商品num}\n利益 {利益}\n利益率 {利益率}";
@@ -102,8 +113,7 @@ namespace UI
             return Regex.Replace(s, "[０-９]", p => ((char)(p.Value[0] - '０' + '0')).ToString());
         }
 
-        private const string 商品コメントテンプレート = @"
-+‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥+
+        private const string 商品コメントテンプレート = @"+‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥+
 
 {素材}
 {色名}
@@ -142,8 +152,10 @@ namespace UI
 ◆関税 （海外発送商品 対象）発生した場合はバイマの規約に基づきご購入者様負担となります。　詳細はこちら→　https://qa.buyma.com/buy/3105.html
 ";
 
-        private const string 色_サイズ情報テンプレート = @"
-※こちらは受注確定後に買い付け、お取り寄せを致します。
+        private const string サイズ情報テンプレート = @"サイズ：{サイズ情報}
+＊商品の実寸には若干の誤差が生じる場合がございます。";
+
+        private const string 色_サイズ情報テンプレート = @"※こちらは受注確定後に買い付け、お取り寄せを致します。
 注文前に必ず在庫状況をお問い合わせ下さい。
 
 ※ご注文の前に必ず【お取引について】をご一読ください。
@@ -155,8 +167,7 @@ namespace UI
 商品名：{簡易商品名}
 カラー：{色名}
 素材：{素材}
-サイズ：{サイズ}
-＊商品の実寸には若干の誤差が生じる場合がございます。
+{サイズ}
 
 +‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥+
 

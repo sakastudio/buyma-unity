@@ -42,14 +42,13 @@ namespace Server
                     
                     // レスポンス取得
                     var response = context.Response;
+                    // CORSを全てに設定
+                    response.Headers.Add("Access-Control-Allow-Origin", "*");
 
                     // HTMLを表示する
                     if (request != null && _sendString != null)
                     {
                         Debug.Log("リクエスト " + request.Url + " レスポンス " + _sendString);
-                        
-                        // CORSを全てに設定
-                        response.Headers.Add("Access-Control-Allow-Origin", "*");
                         
                         var text = Encoding.UTF8.GetBytes(_sendString);
                         response.OutputStream.Write(text, 0, text.Length);
@@ -57,6 +56,7 @@ namespace Server
                     }
                     else
                     {
+                        Debug.Log("リクエスト " + request.Url + " レスポンス 404");
                         response.StatusCode = 404;
                     }
 
