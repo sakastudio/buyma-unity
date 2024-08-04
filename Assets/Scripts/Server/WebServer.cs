@@ -7,6 +7,14 @@ namespace Server
 {
     public class WebServer
     {
+        private static string _sendString = null;
+
+        public static void SetSendString(string str)
+        {
+            _sendString = str;
+        }
+        
+        
         public static void StartServer()
         {
             try
@@ -35,15 +43,16 @@ namespace Server
                     var response = context.Response;
 
                     // HTMLを表示する
-                    if (request != null)
+                    if (request != null && _sendString != null)
                     {
-                        Debug.Log("リクエスト " + request.Url);
+                        Debug.Log("リクエスト " + request.Url + " レスポンス " + _sendString);
                         
                         // CORSを全てに設定
                         response.Headers.Add("Access-Control-Allow-Origin", "*");
                         
-                        byte[] text = Encoding.UTF8.GetBytes("{\"test\" : \"hoge\",\"test2\" : 2}");
+                        var text = Encoding.UTF8.GetBytes(_sendString);
                         response.OutputStream.Write(text, 0, text.Length);
+                        _sendString = null;
                     }
                     else
                     {
