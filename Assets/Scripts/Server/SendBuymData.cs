@@ -1,5 +1,8 @@
-﻿namespace Server
+﻿using System;
+
+namespace Server
 {
+    [Serializable]
     public class SendBuymData
     {
         public string 商品名;
@@ -12,5 +15,11 @@
         public string ブランド;
         
         public string シーズン;
+
+        public string 色_サイズ情報;
+        
+        public int 価格;
+
+        public string 出品メモ;
     }
 }

@@ -9,9 +9,10 @@ namespace Server
     {
         private static string _sendString = null;
 
-        public static void SetSendString(string str)
+        public static void SetSendString(SendBuymData sendBuymData)
         {
-            _sendString = str;
+            _sendString = JsonUtility.ToJson(sendBuymData);
+            Debug.Log("送信データ " + _sendString);
         }
         
         
