@@ -11,11 +11,10 @@ namespace UI
         
         [SerializeField] private TMP_Text 商品名;
         
+        [SerializeField] private TMP_InputField 商品コメント簡易商品名;
         [SerializeField] private TMP_InputField 商品コメント素材;
         [SerializeField] private TMP_InputField 商品コメント色;
-        [SerializeField] private TMP_InputField 商品コメント簡易説明;
-
-        [SerializeField] private TMP_Text 商品コメント;
+        [SerializeField] private TMP_Dropdown 商品コメントリスト;
 
         [SerializeField] private TMP_Text カテゴリ1;
         [SerializeField] private TMP_Text カテゴリ2;
@@ -29,5 +28,10 @@ namespace UI
 
 
         [SerializeField] private TMP_Text 買付メモ;
+
+        public void CreateData()
+        {
+            
+        }
     }
 }
