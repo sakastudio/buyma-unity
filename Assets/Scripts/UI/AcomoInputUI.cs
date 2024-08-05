@@ -83,8 +83,9 @@ namespace UI
                 var 色サイズ = 色_サイズ情報テンプレート
                     .Replace("{ブランド名}", "CHANEL")
                     .Replace("{簡易商品名}", 商品コメント簡易商品名.text)
-                    .Replace("{色名}", 商品コメント色.text)
-                    .Replace("{素材}", 商品コメント素材.text);
+                    .Replace("{色名}", 商品コメント色.text.Replace("\n",""))
+                    .Replace("{素材}", 商品コメント素材.text.Replace("\n",""))
+                    .Replace("{簡易コメント}", 商品簡易コメント);
                 if (サイズを入力.isOn)
                 {
                     色サイズ = 色サイズ.Replace("{サイズ}", サイズ情報テンプレート.Replace("{サイズ情報}", サイズ.text));
@@ -113,12 +114,13 @@ namespace UI
             return Regex.Replace(s, "[０-９]", p => ((char)(p.Value[0] - '０' + '0')).ToString());
         }
 
-        private const string 商品コメントテンプレート = @"+‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥+
+        private const string 商品コメントテンプレート = @".
++‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥+
 
 {素材}
 {色名}
 
-{簡易コメント}
+◆{簡易コメント}
 
 +‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥+
 
@@ -168,6 +170,8 @@ namespace UI
 カラー：{色名}
 素材：{素材}
 {サイズ}
+
+◆{簡易コメント}
 
 +‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥+
 
