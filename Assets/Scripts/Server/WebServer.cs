@@ -18,54 +18,51 @@ namespace Server
         
         public static void StartServer()
         {
-            try
+            // HTTPリスナー作成
+            HttpListener listener = new HttpListener();
+
+            // リスナー設定
+            listener.Prefixes.Clear();
+            listener.Prefixes.Add(@"http://localhost:3500/");
+
+            // リスナー開始
+            listener.Start();
+
+            Debug.Log("サーバーをスタート");
+
+            while (true)
             {
-                // HTTPリスナー作成
-                HttpListener listener = new HttpListener();
+                Debug.Log("リクエストを待機");
+                    
+                // リクエスト取得
+                var context = listener.GetContext();
+                var request = context.Request;
+                    
+                // レスポンス取得
+                var response = context.Response;
 
-                // リスナー設定
-                listener.Prefixes.Clear();
-                listener.Prefixes.Add(@"http://localhost:3500/");
-
-                // リスナー開始
-                listener.Start();
-
-                Debug.Log("サーバーをスタート");
-
-                while (true)
+                // HTMLを表示する
+                if (request != null)
                 {
-                    Debug.Log("リクエストを待機");
-                    
-                    // リクエスト取得
-                    var context = listener.GetContext();
-                    var request = context.Request;
-                    
-                    // レスポンス取得
-                    var response = context.Response;
-                    // CORSを全てに設定
-                    response.Headers.Add("Access-Control-Allow-Origin", "*");
-
-                    // HTMLを表示する
-                    if (request != null && _sendString != null)
+                    // getが含まれるかどうか
+                    if (request.Url.ToString().Contains("get") && _sendString != null)
                     {
-                        Debug.Log("リクエスト " + request.Url + " レスポンス " + _sendString);
-                        
                         var text = Encoding.UTF8.GetBytes(_sendString);
+                        response.Headers.Add("Access-Control-Allow-Origin", "*"); // CORSを全てに設定
                         response.OutputStream.Write(text, 0, text.Length);
-                        _sendString = null;
-                    }
-                    else
+                        
+                        Debug.Log("リクエスト get レスポンス " + _sendString);
+                    } else if (request.Url.ToString().Contains("ok"))
                     {
-                        Debug.Log("リクエスト " + request.Url + " レスポンス 404");
-                        response.StatusCode = 404;
+                        _sendString = null;
+                        var empty = Encoding.UTF8.GetBytes("");
+                        response.Headers.Add("Access-Control-Allow-Origin", "*");// CORSを全てに設定
+                        response.OutputStream.Write(empty, 0, empty.Length);
+                        Debug.Log("リクエスト ok レスポンス");
                     }
 
                     response.Close();
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
             }
         }
     }

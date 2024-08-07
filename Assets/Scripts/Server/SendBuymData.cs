@@ -14,6 +14,8 @@ namespace Server
         
         public string ブランド;
         
+        public string URL;
+        
         public string シーズン;
 
         public string 色_サイズ情報;
@@ -21,5 +23,6 @@ namespace Server
         public int 価格;
 
         public string 出品メモ;
+        public string 買付ショップ名;
     }
 }

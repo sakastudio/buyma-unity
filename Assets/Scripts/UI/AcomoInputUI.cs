@@ -78,6 +78,8 @@ namespace UI
                 buymaData.第三カテゴリ = カテゴリ3;
 
                 buymaData.ブランド = "CHANEL";
+                buymaData.買付ショップ名 = "CHANEL直営店";
+                buymaData.URL = url;
                 buymaData.シーズン = シーズン;
 
                 var 色サイズ = 色_サイズ情報テンプレート
@@ -114,8 +116,7 @@ namespace UI
             return Regex.Replace(s, "[０-９]", p => ((char)(p.Value[0] - '０' + '0')).ToString());
         }
 
-        private const string 商品コメントテンプレート = @".
-+‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥+
+        private const string 商品コメントテンプレート = @"+‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥‥+
 
 {素材}
 {色名}
