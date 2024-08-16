@@ -53,12 +53,16 @@ namespace UI
                 var split = 元データ.text.Split('\t');
                 //全角数字を半角数字に変換
                 var 商品num = ZenToHanNum(split[0]);
-                var カテゴリ1 = split[3].Split(" > ")[0];
-                var カテゴリ2 = split[3].Split(" > ")[1];
-                var カテゴリ3 = split[3].Split(" > ")[2];
+                var カテゴリ1 = split[3].Split(">")[0].Replace(" ", "");
+                var カテゴリ2 = split[3].Split(">")[1].Replace(" ", "");
+                var カテゴリ3 = split[3].Split(">")[2].Replace(" ", "");
                 var シーズン = split[5];
                 var 商品名 = split[6];
-                var url = split[7];
+                
+                var 仕入れ先URL = split[7];
+                var モデリングURL = split[8];
+                
+                var url = string.IsNullOrEmpty(仕入れ先URL) ? モデリングURL : 仕入れ先URL;
                 商品URL.text = url;
                 var 価格 = int.Parse(split[12].Replace("¥", "").Replace(",", ""));
                 
