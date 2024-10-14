@@ -50,24 +50,21 @@ namespace UI
         {
             try
             {
-                var split = 元データ.text.Split('\t');
+                var rawData = 元データ.text.Split('\t');
                 //全角数字を半角数字に変換
-                var 商品num = ZenToHanNum(split[0]);
-                var カテゴリ1 = split[3].Split(">")[0].Replace(" ", "");
-                var カテゴリ2 = split[3].Split(">")[1].Replace(" ", "");
-                var カテゴリ3 = split[3].Split(">")[2].Replace(" ", "");
-                var シーズン = split[5];
-                var 商品名 = split[6];
+                var 商品num = ZenToHanNum(rawData[0]);
+                var カテゴリ1 = rawData[3].Split(">")[0].Replace(" ", "");
+                var カテゴリ2 = rawData[3].Split(">")[1].Replace(" ", "");
+                var カテゴリ3 = rawData[3].Split(">")[2].Replace(" ", "");
+                var シーズン = rawData[5];
+                var 商品名 = rawData[6];
+                var 仕入れ先URL = rawData[7];
+                商品URL.text = string.IsNullOrEmpty(仕入れ先URL) ? "" : 仕入れ先URL;
                 
-                var 仕入れ先URL = split[7];
-                var モデリングURL = split[8];
+                var 価格 = int.Parse(rawData[12].Replace("¥", "").Replace(",", ""));
                 
-                var url = string.IsNullOrEmpty(仕入れ先URL) ? モデリングURL : 仕入れ先URL;
-                商品URL.text = url;
-                var 価格 = int.Parse(split[12].Replace("¥", "").Replace(",", ""));
-                
-                var 利益 = split[25];
-                var 利益率 = split[26];
+                var 利益 = rawData[25];
+                var 利益率 = rawData[26];
 
                 var buymaData = new SendBuymData();
                 buymaData.商品名 = 商品名;
@@ -83,7 +80,7 @@ namespace UI
 
                 buymaData.ブランド = "CHANEL";
                 buymaData.買付ショップ名 = "CHANEL直営店";
-                buymaData.URL = url;
+                buymaData.URL = 仕入れ先URL;
                 buymaData.シーズン = シーズン;
 
                 var 色サイズ = 色_サイズ情報テンプレート
