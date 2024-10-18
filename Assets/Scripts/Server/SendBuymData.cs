@@ -18,6 +18,7 @@ namespace Server
         
         public string シーズン;
 
+        public string サイズ入力タイプ;
         public string 色_サイズ情報;
         
         public int 価格;

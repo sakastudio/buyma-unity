@@ -617,6 +617,7 @@ MonoBehaviour:
   "\u5546\u54C1\u30B3\u30E1\u30F3\u30C8\u7D20\u6750": {fileID: 2141000396}
   "\u5546\u54C1\u30B3\u30E1\u30F3\u30C8\u8272": {fileID: 1884704333}
   "\u5546\u54C1\u30B3\u30E1\u30F3\u30C8\u30EA\u30B9\u30C8": {fileID: 2272294006141032579}
+  "\u30B5\u30A4\u30BA\u5165\u529B\u30BF\u30A4\u30D7": {fileID: 0}
   "\u30B5\u30A4\u30BA\u3092\u5165\u529B": {fileID: 6770149023119528818}
   "\u30B5\u30A4\u30BA\u5165\u529B\u6B04": {fileID: 1675577096}
   "\u30B5\u30A4\u30BA": {fileID: 1025349897}
@@ -2543,7 +2544,7 @@ PrefabInstance:
     - target: {fileID: 127865870965071905, guid: 83d5d5e9ff9b79d4ebe1635d91edd909,
         type: 3}
       propertyPath: m_Name
-      value: "\u30C9\u30ED\u30C3\u30D7\u30C0\u30A6\u30F3"
+      value: "\u30B5\u30A4\u30BA\u5165\u529B"
       objectReference: {fileID: 0}
     - target: {fileID: 273470802287122560, guid: 83d5d5e9ff9b79d4ebe1635d91edd909,
         type: 3}
@@ -2553,7 +2554,7 @@ PrefabInstance:
     - target: {fileID: 273470802287122560, guid: 83d5d5e9ff9b79d4ebe1635d91edd909,
         type: 3}
       propertyPath: m_Options.m_Options.Array.data[0].m_Text
-      value: "\u30D5\u30EA\u30FC\u5165\u529B"
+      value: "\u306A\u3057"
       objectReference: {fileID: 0}
     - target: {fileID: 273470802287122560, guid: 83d5d5e9ff9b79d4ebe1635d91edd909,
         type: 3}
@@ -2669,6 +2670,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7249008433187615932, guid: 83d5d5e9ff9b79d4ebe1635d91edd909,
+        type: 3}
+      propertyPath: m_text
+      value: "\u30B5\u30A4\u30BA\u5165\u529B\u30BF\u30A4\u30D7"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

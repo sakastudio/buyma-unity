@@ -19,6 +19,8 @@ namespace UI
         [SerializeField] private TMP_InputField 商品コメント色;
         [SerializeField] private TMP_Dropdown 商品コメントリスト;
 
+        [SerializeField] private TMP_Dropdown サイズ入力タイプ;
+        
         [SerializeField] private Toggle サイズを入力;
         [SerializeField] private GameObject サイズ入力欄;
         [SerializeField] private TMP_InputField サイズ;
@@ -101,6 +103,10 @@ namespace UI
                 
                 buymaData.価格 = 価格;
                 buymaData.出品メモ = $"三浦 伽奈\nNo.{商品num}\n利益 {利益}\n利益率 {利益率}";
+                
+                
+                buymaData.サイズ入力タイプ = サイズ入力タイプ.options[サイズ入力タイプ.value].text;
+                
 
                 return buymaData;
             }
