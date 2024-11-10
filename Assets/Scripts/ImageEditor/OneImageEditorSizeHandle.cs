@@ -46,22 +46,28 @@ private void Update()
     RectTransformUtility.ScreenPointToLocalPointInRectangle(parentRect, lastMousePosition, null, out Vector2 localLastMousePosition);
     Vector2 deltaLocal = localMousePosition - localLastMousePosition;
 
-    // 対角の位置を固定しながら大きさを変更する
+    // アスペクト比1:1を維持しながらサイズを変更
+    float delta = 0f;
+
     switch (currentHandle)
     {
         case CurrentHandle.RightUp:
-            handleObject.offsetMax += deltaLocal;
+            delta = Mathf.Max(deltaLocal.x, deltaLocal.y);
+            handleObject.offsetMax += new Vector2(delta, delta);
             break;
         case CurrentHandle.RightDown:
-            handleObject.offsetMax += new Vector2(deltaLocal.x, 0);
-            handleObject.offsetMin += new Vector2(0, deltaLocal.y);
+            delta = Mathf.Max(deltaLocal.x, -deltaLocal.y);
+            handleObject.offsetMax += new Vector2(delta, -delta);
+            handleObject.offsetMin += new Vector2(0, delta);
             break;
         case CurrentHandle.LeftUp:
-            handleObject.offsetMin += new Vector2(deltaLocal.x, 0);
-            handleObject.offsetMax += new Vector2(0, deltaLocal.y);
+            delta = Mathf.Max(-deltaLocal.x, deltaLocal.y);
+            handleObject.offsetMin += new Vector2(-delta, 0);
+            handleObject.offsetMax += new Vector2(0, delta);
             break;
         case CurrentHandle.LeftDown:
-            handleObject.offsetMin += deltaLocal;
+            delta = Mathf.Max(-deltaLocal.x, -deltaLocal.y);
+            handleObject.offsetMin += new Vector2(-delta, -delta);
             break;
     }
 
